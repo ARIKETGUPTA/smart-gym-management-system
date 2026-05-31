@@ -7,6 +7,8 @@ const authRoutes =  require("./backend/routes/authRoutes");
 const subscriptionRoutes = require("./backend/routes/subscriptionRoutes");
 const cors = require("cors");
 const dashboardRoutes = require("./backend/routes/dashboardRoutes");
+const adminRoutes = require("./backend/routes/adminRoutes");
+
 app.use(cors());
 
 app.use(express.json());
@@ -23,6 +25,7 @@ app.use("/auth",authRoutes);
 app.use("/attendance",attendanceRoutes);
 app.use( "/subscription", subscriptionRoutes );
 app.use("/dashboard", dashboardRoutes);
+app.use( "/admin", adminRoutes );
 
 app.listen(5000 , () =>{
     console.log("server is running in port 5000");
