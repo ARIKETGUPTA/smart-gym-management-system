@@ -1,5 +1,7 @@
 const Attendance = require("../models/attendance");
 const Subscription = require("../models/subscription");
+const geolib = require("geolib");
+const gymLocation = require("../config/gymLocation");
 
 exports.markAttendance = async (req,res)=>{
     try{
@@ -83,6 +85,85 @@ async(req,res)=>{
 
         res.status(500).json({
             error:error.message
+        });
+
+    }
+
+};
+
+exports.autoMarkAttendance =
+async(req,res)=>{
+
+    try{
+
+        const userId =
+        req.user.id;
+
+        const {
+            latitude,
+            longitude
+        } = req.body;
+
+        const distance =
+        geolib.getDistance(
+
+            {
+                latitude,
+                longitude
+            },
+
+            {
+                latitude:
+                gymLocation.latitude,
+
+                longitude:
+                gymLocation.longitude
+            }
+
+        );
+
+        if(
+            distance >
+            gymLocation.allowedRadius
+        ){
+
+            return res.status(400)
+            .json({
+
+                message:
+                "You are not inside the gym"
+
+            });
+
+        }
+
+        const attendance =
+        await Attendance.create({
+
+            user:userId,
+
+            method:"WiFi",
+
+            checkIn:new Date()
+
+        });
+
+        res.json({
+
+            message:
+            "Attendance marked automatically",
+
+            distance
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
         });
 
     }
