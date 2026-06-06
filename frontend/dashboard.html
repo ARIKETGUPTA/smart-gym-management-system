@@ -3,28 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Page</title>
+    <title>Document</title>
+    <link href="./css/style.css" rel="stylesheet">
 </head>
 <body>
-    <h2 id="name"></h2>
 
-<p>Email: <span id="email"></span></p>
+<div class="container">
 
-<p>Membership:
-<span id="membership"></span>
-</p>
+    <div class="sidebar">
 
-<p>Days Remaining:
-<span id="days"></span>
-</p>
+        <h2>🏋 Smart Gym</h2>
+        <p id="today"></p>
+        <ul>
 
-<p>Payment Status:
-<span id="payment"></span>
-</p>
+            <li>Dashboard</li>
+           <li> <a href="/attendance-page">Attendance</a> </li>
+            <li>Subscription</li>
+            <li>Profile</li>
 
-<p>Attendance Count:
-<span id="attendance"></span>
-</p>
-</body>
+            <li onclick="logout()">
+                Logout
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <div class="profile-card">
+
+           <h2>Welcome Back, <span id="name"></span> 👋</h2>
+           <p id="email"></p>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Membership</h3>
+                <p id="membership"></p>
+            </div>
+
+            <div class="card">
+                <h3>Days Remaining</h3>
+                <p id="days"></p>
+            </div>
+
+            <div class="card">
+                <h3>Payment Status</h3>
+                <p id="payment"></p>
+            </div>
+
+            <div class="card">
+                <h3>Attendance Count</h3>
+                <p id="attendance"></p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <script src="js/dashboard.js"></script>
+
+</body>
 </html>

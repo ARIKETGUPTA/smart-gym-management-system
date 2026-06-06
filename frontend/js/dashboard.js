@@ -1,6 +1,10 @@
-console.log("dashboard.js loaded");
 const token = localStorage.getItem("token");
 
+if(!token){
+
+    window.location.href="/";
+
+}
 
 fetch("/dashboard",{
     headers:{
@@ -32,3 +36,12 @@ fetch("/dashboard",{
 
 });
 
+function logout(){
+
+    localStorage.removeItem("token");
+
+    window.location.href="/";
+
+}
+
+document.getElementById("today") .innerText = new Date().toDateString();

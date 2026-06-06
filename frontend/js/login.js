@@ -1,9 +1,9 @@
 async function login(){
 
     const email = document.getElementById("email").value;
-    console.log(email);
+    
     const password = document.getElementById("password").value;
-    console.log(password);
+    
     const response =
     await fetch(
         "/auth/login",

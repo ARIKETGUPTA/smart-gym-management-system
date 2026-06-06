@@ -41,6 +41,21 @@ app.get("/dashboard-page",(req,res)=>{
 
 });
 
+app.get( "/attendance-page", (req,res)=>{
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "frontend",
+                "attendance.html"
+            )
+
+        );
+
+    }
+);
+
 app.use("/api/attendance",attendanceRoutes);
 app.use("/auth",authRoutes);
 app.use("/attendance",attendanceRoutes);
