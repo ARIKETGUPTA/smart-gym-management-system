@@ -16,10 +16,10 @@
         <p id="today"></p>
         <ul>
 
-            <li>Dashboard</li>
-           <li> <a href="/attendance-page">Attendance</a> </li>
-            <li>Subscription</li>
-            <li>Profile</li>
+            <!-- <li onclick="/dashboard-page">Dashboard</li>  -->
+           <li onclick="goToAttendance()">Attendance</li>
+            <li onclick="goToSubscription()"> Subscription </li>
+            <li onclick="goToProfile()">Profile</li>
 
             <li onclick="logout()">
                 Logout
@@ -37,6 +37,28 @@
            <p id="email"></p>
 
         </div>
+
+        <div class="quick-actions">
+
+    <h2>Quick Actions</h2>
+
+    <div class="action-buttons">
+
+        <button onclick="markAttendance()">
+            ✅ Mark Attendance
+        </button>
+
+        <button onclick="goToAttendance()">
+            📋 Attendance History
+        </button>
+
+        <button onclick="goToSubscription()">
+            💳 Subscription
+        </button>
+
+    </div>
+
+</div>
 
         <div class="cards">
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile page</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+    <div class="sidebar">
+        <h2>🏋 Smart Gym</h2>
+        <p id="today"></p>
+        <ul>
+
+            <li>Dashboard</li>
+            <li > <a href="/attendance-page">Attendance</a> </li>
+            <li> <a href="/subscription-page">Subscription</a> </li>
+            <li>Profile</li>
+
+            <li onclick="logout()">
+                Logout
+            </li>
+
+        </ul>
+    </div>
+    <div class="main">
+    <h1>My Profile</h1>
+
+    <input id="name">
+
+    <input id="email" disabled>
+
+    <button onclick="updateProfile()">Save Changes </button>
+
+</div>
+</div>
+<script src="js/profile.js"></script>
+</body>
+</html>

@@ -49,3 +49,47 @@ fetch(
     });
 
 });
+
+fetch(
+    "/attendance/stats",
+    {
+        headers:{
+            Authorization:
+            `Bearer ${token}`
+        }
+    }
+)
+.then(res=>res.json())
+.then(data=>{
+
+    const ctx =
+    document.getElementById(
+        "attendanceChart"
+    );
+
+    new Chart(ctx,{
+
+        type:"bar",
+
+        data:{
+
+            labels:[
+                "Attendance"
+            ],
+
+            datasets:[{
+
+                label:
+                "Total Attendance",
+
+                data:[
+                    data.totalAttendance
+                ]
+
+            }]
+
+        }
+
+    });
+
+});

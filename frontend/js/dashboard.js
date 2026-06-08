@@ -34,6 +34,14 @@ fetch("/dashboard",{
     document.getElementById("attendance").innerText =
     data.attendanceCount;
 
+    if(data.subscription.paymentStatus=== "Pending"){
+    document.getElementById("payment").style.color = "orange";
+    }
+
+    if(data.subscription.paymentStatus === "Pending"){
+    document.getElementById("payment").style.color = "orange";
+    }
+
 });
 
 function logout(){
@@ -41,6 +49,77 @@ function logout(){
     localStorage.removeItem("token");
 
     window.location.href="/";
+
+}
+
+function goToAttendance(){
+
+    window.location.href =
+    "/attendance-page";
+
+}
+
+function goToSubscription(){
+
+   window.location.href ="/subscription-page";
+
+}
+
+function goToProfile(){
+
+   window.location.href ="/profile-page";
+
+}
+
+async function markAttendance(){
+
+    const token =
+    localStorage.getItem("token");
+
+    try{
+
+        const response =
+        await fetch(
+
+            "/attendance/auto-mark",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "application/json",
+
+                    Authorization:
+                    `Bearer ${token}`
+
+                },
+
+                body:JSON.stringify({
+
+                    latitude:26.4499,
+
+                    longitude:80.3319
+
+                })
+
+            }
+
+        );
+
+        const data =
+        await response.json();
+
+        alert(data.message);
+
+    }
+    catch(error){
+
+        console.log(error);
+
+    }
 
 }
 

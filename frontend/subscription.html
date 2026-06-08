@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subscription</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h2>🏋 Smart Gym</h2>
+        <p id="today"></p>
+        <ul>
+
+            <li>Dashboard</li>
+            <li > <a href="/attendance-page">Attendance</a> </li>
+            <li> <a href="/subscription-page">Subscription</a> </li>
+            <li>Profile</li>
+
+            <li onclick="logout()">
+                Logout
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="main">
+
+        <div class="card">
+
+            <h2>Subscription Details</h2>
+
+            <p>Plan: <span id="plan"></span></p>
+            <p>Price: ₹<span id="price"></span></p>
+            <p>Status: <span id="status"></span></p>
+            <p>Payment: <span id="payment"></span></p>
+            <p>Days Left: <span id="days"></span></p>
+
+        </div>
+
+        <div
+        id="reminder"
+        class="card"
+        style="display:none">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/subscription.js"></script>
+
+</body>
+</html>

@@ -56,6 +56,38 @@ app.get( "/attendance-page", (req,res)=>{
     }
 );
 
+app.get(
+    "/subscription-page",
+    (req,res)=>{
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "frontend",
+                "subscription.html"
+            )
+
+        );
+
+    }
+);
+
+app.get(
+    "/profile-page",
+    (req,res)=>{
+
+        res.sendFile(
+            path.join(
+                __dirname,
+                "frontend",
+                "profile.html"
+            )
+        );
+
+    }
+);
+
 app.use("/api/attendance",attendanceRoutes);
 app.use("/auth",authRoutes);
 app.use("/attendance",attendanceRoutes);

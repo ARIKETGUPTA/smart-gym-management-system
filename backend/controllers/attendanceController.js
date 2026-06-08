@@ -169,3 +169,33 @@ async(req,res)=>{
     }
 
 };
+
+exports.getAttendanceStats = async(req,res)=>{
+
+    try{
+
+        const totalAttendance =
+        await Attendance.countDocuments({
+
+            user:req.user.id
+
+        });
+
+        res.json({
+
+            totalAttendance
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
