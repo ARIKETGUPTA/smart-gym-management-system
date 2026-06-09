@@ -88,6 +88,23 @@ app.get(
     }
 );
 
+app.get(
+    "/admin-members-page",
+    (req,res)=>{
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "frontend",
+                "admin-members.html"
+            )
+
+        );
+
+    }
+);
+
 app.use("/api/attendance",attendanceRoutes);
 app.use("/auth",authRoutes);
 app.use("/attendance",attendanceRoutes);
