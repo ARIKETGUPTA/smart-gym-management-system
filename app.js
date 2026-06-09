@@ -9,7 +9,7 @@ const cors = require("cors");
 const dashboardRoutes = require("./backend/routes/dashboardRoutes");
 const adminRoutes = require("./backend/routes/adminRoutes");
 const path = require("path");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.use(cors());
 
 app.use(express.json());
