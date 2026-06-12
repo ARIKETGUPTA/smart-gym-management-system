@@ -71,6 +71,10 @@ function goToProfile(){
 
 }
 
+function goToDashboard(){
+    window.location.href ="/dashboard-page";
+}
+
 async function markAttendance(){
 
     const token =

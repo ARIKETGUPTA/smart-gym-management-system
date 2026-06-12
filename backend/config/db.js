@@ -6,7 +6,7 @@ const connectDB = async () => {
   try {
     // Use an environment variable for security
     const conn = await mongoose.connect(process.env.MONGO_URL);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    // console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1); // Stop the app if connection fails

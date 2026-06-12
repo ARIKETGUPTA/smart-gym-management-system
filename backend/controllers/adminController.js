@@ -118,3 +118,45 @@ async(req,res)=>{
     }
 
 };
+exports.deleteMember = async(req,res)=>{
+
+    try{
+
+        const { id } = req.params;
+
+        const user = await User.findById(id);
+
+        if(!user){
+
+            return res.status(404).json({
+                message:"User not found"
+            });
+
+        }
+        if(user.role === "Admin"){
+
+            return res.status(400).json({
+
+                message:
+                "Cannot delete admin"
+
+            });
+
+        }
+
+        await User.findByIdAndDelete(id);
+
+        res.status(200).json({
+            message:"Member deleted successfully"
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+            error:error.message
+        });
+
+    }
+
+};

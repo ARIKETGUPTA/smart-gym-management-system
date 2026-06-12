@@ -19,11 +19,22 @@ fetch("/admin/members",{
         document.createElement("tr");
 
         row.innerHTML = `
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td>${user.role}</td>
-        `;
 
+            <td>${user.name}</td>
+
+            <td>${user.email}</td>
+
+            <td>${user.role}</td>
+
+            <td>${user.membershipType}</td>
+
+            <td>${user.paymentStatus}</td>
+
+        <td>
+
+        <button onclick="deleteMember('${user._id}')">Delete </button>
+
+        </td>`;
         table.appendChild(row);
 
     });
@@ -32,3 +43,28 @@ fetch("/admin/members",{
 .catch(err=>{
     console.log(err);
 });
+
+async function deleteMember(id){
+
+    const token =
+    localStorage.getItem("token");
+
+    const response =
+    await fetch(
+
+        `/admin/member/${id}`,
+
+        {
+
+            method:"DELETE",
+
+            headers:{
+                Authorization:
+                `Bearer ${token}`
+            }
+
+        }
+
+    );
+
+}

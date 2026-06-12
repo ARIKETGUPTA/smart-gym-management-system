@@ -67,3 +67,34 @@ async function updateProfile(){
     );
 
 }
+
+function logout(){
+
+    localStorage.removeItem("token");
+
+    window.location.href="/";
+
+}
+
+function goToAttendance(){
+
+    window.location.href =
+    "/attendance-page";
+
+}
+
+function goToSubscription(){
+
+   window.location.href ="/subscription-page";
+
+}
+
+function goToProfile(){
+
+   window.location.href ="/profile-page";
+
+}
+
+function goToDashboard(){
+    window.location.href ="/dashboard-page";
+}
