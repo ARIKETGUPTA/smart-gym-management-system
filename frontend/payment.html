@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Payments</title>
+
+    <link rel="stylesheet"
+    href="css/payment.css">
+
+</head>
+
+<body>
+
+    <h1>Payment Management</h1>
+
+    <input
+    type="number"
+    id="amount"
+    placeholder="Enter Amount">
+
+    <br><br>
+
+    <select id="paymentMethod">
+
+        <option value="UPI">
+            UPI
+        </option>
+
+        <option value="Cash">
+            Cash
+        </option>
+
+        <option value="Card">
+            Card
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button onclick="makePayment()">
+        Record Payment
+    </button>
+
+    <hr>
+
+    <h2>Payment History</h2>
+
+    <table border="1">
+
+        <thead>
+
+            <tr>
+
+                <th>Amount</th>
+
+                <th>Method</th>
+
+                <th>Status</th>
+
+                <th>Date</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="paymentTable">
+
+        </tbody>
+
+    </table>
+
+<script src="js/payment.js"></script>
+
+</body>
+</html>
