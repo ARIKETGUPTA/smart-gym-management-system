@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.set('view engine', 'ejs');
 
+
 connectDB();
 
 app.get("/",(req,res)=>{

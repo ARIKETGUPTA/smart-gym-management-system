@@ -3,71 +3,25 @@ const Attendance = require("../models/attendance");
 const Subscription = require("../models/subscription");
 
 
-exports.getAllMembers =
-async(req,res)=>{
+exports.getAllMembers = async(req,res)=>{
 
     try{
 
-        const users =
-        await User.find()
-        .select("-password");
+        const search = req.query.search || "";
 
-        res.json(users);
+        const users = await User.find({
 
-    }catch(error){
-
-        res.status(500).json({
-            error:error.message
-        });
-
-    }
-
-};
-
-exports.getStats =
-async(req,res)=>{
-
-    try{
-
-        const totalMembers =
-        await User.countDocuments();
-
-        const activeSubscriptions =
-        await Subscription.countDocuments({
-            status:"Active"
-        });
-
-        const expiredSubscriptions =
-        await Subscription.countDocuments({
-            status:"Expired"
-        });
-
-        const today = new Date();
-
-        today.setHours(0,0,0,0);
-
-        const todayAttendance =
-        await Attendance.countDocuments({
-
-            date:{
-                $gte:today
+            name:{
+                $regex:search,
+                $options:"i"
             }
 
         });
 
-        res.json({
+        res.json(users);
 
-            totalMembers,
-
-            activeSubscriptions,
-
-            expiredSubscriptions,
-
-            todayAttendance
-
-        });
-
-    }catch(error){
+    }
+    catch(error){
 
         res.status(500).json({
             error:error.message
@@ -76,6 +30,7 @@ async(req,res)=>{
     }
 
 };
+
 
 exports.updatePaymentStatus =
 async(req,res)=>{
@@ -155,6 +110,146 @@ exports.deleteMember = async(req,res)=>{
 
         res.status(500).json({
             error:error.message
+        });
+
+    }
+
+};
+
+exports.updateMember = async(req,res)=>{
+
+    try{
+
+        const { id } = req.params;
+
+        const {
+            name,
+            membershipType,
+            paymentStatus,
+            role
+        } = req.body;
+
+        const user =
+        await User.findByIdAndUpdate(
+
+            id,
+
+            {
+                name,
+                membershipType,
+                paymentStatus,
+                role
+            },
+
+            {
+                new:true,
+                runValidators:true
+            }
+
+        );
+
+        if(!user){
+
+            return res.status(404).json({
+                message:"User not found"
+            });
+
+        }
+
+        res.status(200).json({
+
+            message:"Member updated successfully",
+
+            user
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+
+exports.getAdminStats = async(req,res)=>{
+
+    try{
+
+        const totalMembers =
+        await User.countDocuments();
+
+        const activeSubscriptions =
+        await Subscription.countDocuments({
+
+            status:"Active"
+
+        });
+
+        const subscriptions =
+        await Subscription.find({
+
+            paymentStatus:"Paid"
+
+        });
+
+        const totalRevenue =
+        subscriptions.reduce(
+
+            (sum,item)=>
+
+            sum + item.price,
+
+            0
+
+        );
+
+        const startOfDay =
+        new Date();
+
+        startOfDay.setHours(
+            0,0,0,0
+        );
+
+        const endOfDay =
+        new Date();
+
+        endOfDay.setHours(
+            23,59,59,999
+        );
+
+        const todayAttendance =
+        await Attendance.countDocuments({
+
+            date:{
+                $gte:startOfDay,
+                $lte:endOfDay
+            }
+
+        });
+
+        res.json({
+
+            totalMembers,
+            activeSubscriptions,
+            totalRevenue,
+            todayAttendance
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
         });
 
     }

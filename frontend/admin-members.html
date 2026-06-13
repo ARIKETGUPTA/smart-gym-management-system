@@ -16,8 +16,8 @@
         <h2>🏋 Smart Gym</h2>
 
         <ul>
-            <li><a href="/dashboard-page">Dashboard</a></li>
-            <li><a href="/admin-members-page">Members</a></li>
+            <li>Dashboard</li>
+            <li>Members</li>
         </ul>
 
     </div>
@@ -25,7 +25,8 @@
     <div class="main">
 
         <h1>Gym Members</h1>
-
+            <input type="text" id="search" placeholder="Search Member">
+            <button onclick="searchMembers()">Search</button>
         <table>
 
             <thead>
@@ -35,9 +36,9 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>membershipType</th>
-                    <th>paymentStatus</th>
-                    <th>Delete</th>
+                    <th>MembershipType</th>
+                    <th>PaymentStatus</th>
+                    <th>Control</th>
                 </tr>
 
             </thead>
