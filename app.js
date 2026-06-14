@@ -12,6 +12,7 @@ const path = require("path");
 const PORT = process.env.PORT || 5000;
 app.use(cors());
 const paymentRoutes = require("./backend/routes/paymentRoutes");
+
 app.use(express.json());
 app.set('view engine', 'ejs');
 

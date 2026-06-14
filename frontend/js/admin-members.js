@@ -1,20 +1,44 @@
 const token = localStorage.getItem("token");
-console.log(token);
-fetch("/admin/members",{
-    headers:{
-        Authorization:`Bearer ${token}`
+
+// Load all members on page load
+
+fetch("/admin/members", {
+
+    headers: {
+        Authorization: `Bearer ${token}`
     }
+
 })
-.then(res=>res.json())
-.then(data=>{
+
+.then(res => res.json())
+
+.then(data => {
 
     console.log("Members Data:", data);
 
-    const table = document.getElementById("membersTable");
+    renderMembers(data);
 
-    data.forEach(user=>{
+})
 
-        const row = document.createElement("tr");
+.catch(err => {
+
+    console.log(err);
+
+});
+
+// Render Members
+
+function renderMembers(data) {
+
+    const table =
+    document.getElementById("membersTable");
+
+    table.innerHTML = "";
+
+    data.forEach(user => {
+
+        const row =
+        document.createElement("tr");
 
         row.innerHTML = `
 
@@ -24,116 +48,42 @@ fetch("/admin/members",{
 
             <td>${user.role}</td>
 
-            <td>${user.membershipType}</td>
+            <td>${user.membershipType || "-"}</td>
 
-            <td>${user.paymentStatus}</td>
+            <td>${user.paymentStatus || "-"}</td>
 
-        <td>
+            <td>
 
-        <button
-        onclick="editMember('${user._id}')">
+                <button
+                onclick="editMember('${user._id}')">
 
-        Edit
+                Edit
 
-        </button>
+                </button>
 
-        <button
-        onclick="deleteMember('${user._id}')">
+                <button
+                onclick="deleteMember('${user._id}')">
 
-        Delete
+                Delete
 
-        </button>
+                </button>
 
-        </td>`;
+            </td>
+
+        `;
+
         table.appendChild(row);
 
     });
 
-})
-.catch(err=>{
-    console.log(err);
-});
-
-async function deleteMember(id){
-
-    const token =
-    localStorage.getItem("token");
-
-    const response =
-    await fetch(
-
-        `/admin/member/${id}`,
-
-        {
-
-            method:"DELETE",
-
-            headers:{
-                Authorization:
-                `Bearer ${token}`
-            }
-
-        }
-
-    );
-
 }
 
-async function editMember(id){
+// Search Members
 
-    const name = prompt("Enter new name");
-
-    if(!name){
-
-        return;
-
-    }
-
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(
-
-        `/admin/member/${id}`,
-
-        {
-
-            method:"PUT",
-
-            headers:{
-
-                "Content-Type":
-                "application/json",
-
-                Authorization:
-                `Bearer ${token}`
-
-            },
-
-            body:JSON.stringify({
-
-                name
-
-            })
-
-        }
-
-    );
-
-    const data = await response.json();
-
-    alert(data.message);
-
-    location.reload();
-
-}
-
-async function searchMembers(){
+async function searchMembers() {
 
     const search =
     document.getElementById("search").value;
-
-    const token =
-    localStorage.getItem("token");
 
     const response =
     await fetch(
@@ -142,7 +92,7 @@ async function searchMembers(){
 
         {
 
-            headers:{
+            headers: {
 
                 Authorization:
                 `Bearer ${token}`
@@ -156,66 +106,90 @@ async function searchMembers(){
     const data =
     await response.json();
 
-    console.log(data);
+    renderMembers(data);
 
 }
 
-exports.getRevenue = async(req,res)=>{
+// Delete Member
 
-    try{
+async function deleteMember(id) {
 
-        const subscriptions =
-        await Subscription.find({
+    const response =
+    await fetch(
 
-            paymentStatus:"Paid"
-
-        });
-
-        const revenue =
-        subscriptions.reduce(
-
-            (sum,item)=>
-
-            sum + item.price,
-
-            0
-
-        );
-
-        res.json({
-
-            totalRevenue:revenue
-
-        });
-
-    }
-    catch(error){
-
-        res.status(500).json({
-
-            error:error.message
-
-        });
-
-    }
-
-};
-
-exports.updateExpiredSubscriptions =
-async()=>{
-
-    await Subscription.updateMany(
+        `/admin/member/${id}`,
 
         {
-            endDate:{
-                $lt:new Date()
+
+            method: "DELETE",
+
+            headers: {
+
+                Authorization:
+                `Bearer ${token}`
+
             }
-        },
 
-        {
-            status:"Expired"
         }
 
     );
 
-};
+    const data =
+    await response.json();
+
+    alert(data.message);
+
+    location.reload();
+
+}
+
+// Edit Member
+
+async function editMember(id) {
+
+    const name =
+    prompt("Enter new name");
+
+    if (!name) {
+
+        return;
+
+    }
+
+    const response =
+    await fetch(
+
+        `/admin/member/${id}`,
+
+        {
+
+            method: "PUT",
+
+            headers: {
+
+                "Content-Type":
+                "application/json",
+
+                Authorization:
+                `Bearer ${token}`
+
+            },
+
+            body: JSON.stringify({
+
+                name
+
+            })
+
+        }
+
+    );
+
+    const data =
+    await response.json();
+
+    alert(data.message);
+
+    location.reload();
+
+}

@@ -1,15 +1,17 @@
 const User = require("../models/user");
 const Attendance = require("../models/attendance");
 const Subscription = require("../models/subscription");
-
+const Payment = require("../models/payment");
 
 exports.getAllMembers = async(req,res)=>{
 
     try{
 
-        const search = req.query.search || "";
+        const search =
+        req.query.search || "";
 
-        const users = await User.find({
+        const members =
+        await User.find({
 
             name:{
                 $regex:search,
@@ -18,13 +20,15 @@ exports.getAllMembers = async(req,res)=>{
 
         });
 
-        res.json(users);
+        res.json(members);
 
     }
     catch(error){
 
         res.status(500).json({
+
             error:error.message
+
         });
 
     }
@@ -255,3 +259,118 @@ exports.getAdminStats = async(req,res)=>{
     }
 
 };
+
+exports.getRevenueStats = async(req,res)=>{
+
+    try{
+
+        const payments =
+        await Payment.find({
+
+            status:"Paid"
+
+        });
+
+        const totalRevenue =
+        payments.reduce(
+
+            (sum,payment)=>
+
+            sum + payment.amount,
+
+            0
+
+        );
+
+        const startOfMonth =
+        new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            1
+        );
+
+        const monthlyPayments =
+        await Payment.find({
+
+            status:"Paid",
+
+            paymentDate:{
+                $gte:startOfMonth
+            }
+
+        });
+
+        const monthlyRevenue =
+        monthlyPayments.reduce(
+
+            (sum,payment)=>
+
+            sum + payment.amount,
+
+            0
+
+        );
+
+        const startOfDay =
+        new Date();
+
+        startOfDay.setHours(
+            0,0,0,0
+        );
+
+        const endOfDay =
+        new Date();
+
+        endOfDay.setHours(
+            23,59,59,999
+        );
+
+        const todayPayments =
+        await Payment.find({
+
+            status:"Paid",
+
+            paymentDate:{
+                $gte:startOfDay,
+                $lte:endOfDay
+            }
+
+        });
+
+        const todayRevenue =
+        todayPayments.reduce(
+
+            (sum,payment)=>
+
+            sum + payment.amount,
+
+            0
+
+        );
+
+        res.json({
+
+            totalRevenue,
+
+            monthlyRevenue,
+
+            todayRevenue,
+
+            totalPayments:
+            payments.length
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+

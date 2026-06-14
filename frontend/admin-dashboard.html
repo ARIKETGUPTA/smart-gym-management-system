@@ -8,7 +8,7 @@
 
 </head>
 
-<body>
+<body >
 
 <h1>Admin Dashboard</h1>
 
@@ -46,8 +46,74 @@
 
 </div>
 
-<script src="js/admin-dashboard.js">
-</script>
+<div class="card">
 
+    <h2 id="totalRevenue">
+
+    ₹0
+
+    </h2>
+
+    <p>
+
+    Total Revenue
+
+    </p>
+
+</div>
+
+<div class="card">
+
+    <h2 id="monthlyRevenue">
+
+    ₹0
+
+    </h2>
+
+    <p>
+
+    Monthly Revenue
+
+    </p>
+
+</div>
+
+<div class="card">
+
+    <h2 id="todayRevenue">
+
+    ₹0
+
+    </h2>
+
+    <p>
+
+    Today's Revenue
+
+    </p>
+
+</div>
+
+<div class="card">
+
+    <h2 id="totalPayments">
+
+    0
+
+    </h2>
+
+    <p>
+
+    Total Payments
+
+    </p>
+
+</div>
+<h2>Revenue Analytics</h2>
+
+<canvas id="revenueChart"></canvas>
+
+<script src="js/admin-dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
