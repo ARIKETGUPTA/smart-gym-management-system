@@ -374,3 +374,147 @@ exports.getRevenueStats = async(req,res)=>{
 
 };
 
+exports.getTopMembers = async(req,res)=>{
+
+    try{
+
+        const topMembers =
+        await Attendance.aggregate([
+
+            {
+
+                $group:{
+
+                    _id:"$user",
+
+                    attendanceCount:{
+                        $sum:1
+                    }
+
+                }
+
+            },
+
+            {
+
+                $sort:{
+                    attendanceCount:-1
+                }
+
+            },
+
+            {
+
+                $limit:5
+
+            }
+
+        ]);
+
+        const populated =
+        await User.populate(
+
+            topMembers,
+
+            {
+
+                path:"_id",
+
+                select:"name email"
+
+            }
+
+        );
+
+        res.json(populated);
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+exports.getAttendanceStats = async(req,res)=>{
+
+    try{
+
+        const today =
+        new Date();
+
+        const startOfDay =
+        new Date();
+
+        startOfDay.setHours(
+            0,0,0,0
+        );
+
+        const startOfWeek =
+        new Date();
+
+        startOfWeek.setDate(
+            today.getDate() - 7
+        );
+
+        const startOfMonth =
+        new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            1
+        );
+
+        const todayAttendance =
+        await Attendance.countDocuments({
+
+            checkIn:{
+                $gte:startOfDay
+            }
+
+        });
+
+        const weeklyAttendance =
+        await Attendance.countDocuments({
+
+            checkIn:{
+                $gte:startOfWeek
+            }
+
+        });
+
+        const monthlyAttendance =
+        await Attendance.countDocuments({
+
+            checkIn:{
+                $gte:startOfMonth
+            }
+
+        });
+
+        res.json({
+
+            todayAttendance,
+
+            weeklyAttendance,
+
+            monthlyAttendance
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
