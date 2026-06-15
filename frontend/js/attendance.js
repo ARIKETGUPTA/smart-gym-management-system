@@ -1,5 +1,12 @@
 const token = localStorage.getItem("token");
 
+if(!token){
+
+    window.location.href = "/";
+
+}
+
+// Load Attendance History
 fetch(
     "/attendance/history",
     {
@@ -9,38 +16,80 @@ fetch(
         }
     }
 )
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
     const tbody =
-    document.querySelector("tbody");
+    document.querySelector(
+        "#attendanceTable tbody"
+    );
 
-    data.forEach(item=>{
+    tbody.innerHTML = "";
+
+    if(data.length === 0){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+
+                    No attendance records found
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    data.forEach(item => {
 
         const row =
         document.createElement("tr");
 
         row.innerHTML = `
 
-        <td>
-        ${
-        new Date(
-        item.date
-        ).toLocaleDateString()
-        }
-        </td>
+            <td>
 
-        <td>
-        ${item.checkIn}
-        </td>
+                ${new Date(
+                    item.checkIn
+                ).toLocaleDateString()}
 
-        <td>
-        ${item.method}
-        </td>
+            </td>
 
-        <td>
-        ${item.status}
-        </td>
+            <td>
+
+                ${new Date(
+                    item.checkIn
+                ).toLocaleTimeString(
+                    [],
+                    {
+                        hour:"2-digit",
+                        minute:"2-digit"
+                    }
+                )}
+
+            </td>
+
+            <td>
+
+                ${item.method}
+
+            </td>
+
+            <td>
+
+                <span class="present">
+
+                    Present
+
+                </span>
+
+            </td>
 
         `;
 
@@ -48,10 +97,78 @@ fetch(
 
     });
 
+})
+.catch(error => {
+
+    console.log(error);
+
 });
 
+// Attendance Chart
+// fetch(
+//     "/attendance/stats",
+//     {
+//         headers:{
+//             Authorization:
+//             `Bearer ${token}`
+//         }
+//     }
+// )
+// .then(res => res.json())
+// .then(data => {
+
+//     const ctx =
+//     document.getElementById(
+//         "attendanceChart"
+//     );
+
+//     new Chart(ctx,{
+
+//         type:"bar",
+
+//         data:{
+
+//             labels:[
+
+//                 "Present Days"
+
+//             ],
+
+//             datasets:[{
+
+//                 label:
+//                 "Attendance Count",
+
+//                 data:[
+
+//                     data.totalAttendance
+
+//                 ]
+
+//             }]
+
+//         },
+
+//         options:{
+
+//             responsive:true,
+
+//             maintainAspectRatio:false
+
+//         }
+
+//     });
+
+// })
+// .catch(error => {
+
+//     console.log(error);
+
+// });
+
+// Attendance Summary
 fetch(
-    "/attendance/stats",
+    "/attendance/dashboard-stats",
     {
         headers:{
             Authorization:
@@ -59,46 +176,71 @@ fetch(
         }
     }
 )
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
-    const ctx =
+    const attendancePercentage =
     document.getElementById(
-        "attendanceChart"
+        "attendancePercentage"
     );
 
-    new Chart(ctx,{
+    const presentDays =
+    document.getElementById(
+        "presentDays"
+    );
 
-        type:"bar",
+    const missedDays =
+    document.getElementById(
+        "missedDays"
+    );
 
-        data:{
+    const streakDays =
+    document.getElementById(
+        "streakDays"
+    );
 
-            labels:[
-                "Attendance"
-            ],
+    if(attendancePercentage){
 
-            datasets:[{
+        attendancePercentage.innerText =
+        data.attendanceRate + "%";
 
-                label:
-                "Total Attendance",
+    }
 
-                data:[
-                    data.totalAttendance
-                ]
+    if(presentDays){
 
-            }]
+        presentDays.innerText =
+        data.presentDays;
 
-        }
+    }
 
-    });
+    if(missedDays){
+
+        missedDays.innerText =
+        data.missedDays;
+
+    }
+
+    if(streakDays){
+
+        streakDays.innerText =
+        data.streak;
+
+    }
+
+})
+.catch(error => {
+
+    console.log(error);
 
 });
+
+// Navigation Functions
 
 function logout(){
 
     localStorage.removeItem("token");
 
-    window.location.href="/";
+    window.location.href = "/";
 
 }
 
@@ -111,16 +253,21 @@ function goToAttendance(){
 
 function goToSubscription(){
 
-   window.location.href ="/subscription-page";
+    window.location.href =
+    "/subscription-page";
 
 }
 
 function goToProfile(){
 
-   window.location.href ="/profile-page";
+    window.location.href =
+    "/profile-page";
 
 }
 
 function goToDashboard(){
-    window.location.href ="/dashboard-page";
+
+    window.location.href =
+    "/dashboard-page";
+
 }
