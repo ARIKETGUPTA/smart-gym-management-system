@@ -31,6 +31,17 @@ app.get("/",(req,res)=>{
 
 });
 
+app.get("/register",(req,res)=>{
+
+    res.sendFile(
+        path.join(
+            __dirname,"frontend",
+            "register.html"
+        )
+    );
+
+});
+
 app.get("/dashboard-page",(req,res)=>{
 
     res.sendFile(
@@ -124,9 +135,8 @@ app.use("/attendance",attendanceRoutes);
 app.use( "/subscription", subscriptionRoutes );
 app.use("/dashboard", dashboardRoutes);
 app.use( "/admin", adminRoutes );
-app.use(
-    express.static( path.join(__dirname,"frontend"))
-);
+
+app.use(express.static( path.join(__dirname,"frontend")));
 
 app.listen(PORT , () =>{
     console.log("server is running in port 5000");

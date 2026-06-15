@@ -1,6 +1,7 @@
 const User =  require("../models/user");
 const jwt =  require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const Subscription = require("../models/subscription");
 
 exports.signup = async(req,res)=>{
 
@@ -20,6 +21,30 @@ const hashedPassword = await bcrypt.hash(password,10);
 const user = new User({name,email,password:hashedPassword});
 
 await user.save();
+
+const endDate = new Date();
+
+endDate.setMonth(
+    endDate.getMonth() + 1
+);
+
+await Subscription.create({
+
+    user:user._id,
+
+    plan:"Monthly",
+
+    price:499,
+
+    startDate:new Date(),
+
+    endDate,
+
+    status:"Active",
+
+    paymentStatus:"Pending"
+
+});
 
 res.status(201).json({ success:true, message:"User registered successfully",
 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+
+    <link rel="stylesheet"
+    href="css/register.css">
+
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="register-card">
+
+        <div class="logo">
+
+            🏋
+
+        </div>
+
+        <h1>Create Account</h1>
+
+        <p>
+            Join Smart Gym today
+        </p>
+
+        <input
+        type="text"
+        id="name"
+        placeholder="Full Name">
+
+        <input
+        type="email"
+        id="email"
+        placeholder="Email Address">
+
+        <input
+        type="password"
+        id="password"
+        placeholder="Password">
+
+        <select id="membershipType">
+
+            <option value="Monthly">
+                Monthly
+            </option>
+
+            <option value="Quarterly">
+                Quarterly
+            </option>
+
+            <option value="Yearly">
+                Yearly
+            </option>
+
+        </select>
+
+        <button onclick="register()">
+
+            Create Account
+
+        </button>
+
+        <p class="login-link">
+
+            Already have an account?
+
+            <a href="/">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+<script src="js/register.js"></script>
+
+</body>
+
+</html>
