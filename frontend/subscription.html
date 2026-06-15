@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Subscription</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/subscription.css">
 </head>
 <body>
 
@@ -27,26 +27,97 @@
 
     <div class="main">
 
-        <div class="card">
+    <div class="subscription-hero">
 
-            <h2>Subscription Details</h2>
+        <h1>💳 Membership Subscription</h1>
 
-            <p>Plan: <span id="plan"></span></p>
-            <p>Price: ₹<span id="price"></span></p>
-            <p>Status: <span id="status"></span></p>
-            <p>Payment: <span id="payment"></span></p>
-            <p>Days Left: <span id="days"></span></p>
+        <p>
+            Manage your gym membership and payment status
+        </p>
+
+    </div>
+
+    <div class="subscription-grid">
+
+        <div class="subscription-card">
+
+            <div class="plan-icon">
+                🏋️
+            </div>
+
+            <h2 id="plan">
+                Monthly
+            </h2>
+
+            <p class="plan-price">
+
+                ₹<span id="price"></span>
+
+            </p>
+
+            <span id="status" class="status-badge">
+
+                Active
+
+            </span>
 
         </div>
 
-        <div
-        id="reminder"
-        class="card"
-        style="display:none">
+        <div class="subscription-details">
+
+            <h2>Membership Details</h2>
+
+            <div class="detail-row">
+
+                <span>💳 Payment Status</span>
+
+                <strong id="payment"></strong>
+
+            </div>
+
+            <div class="detail-row">
+
+                <span>⏳ Days Remaining</span>
+
+                <strong id="days"></strong>
+
+            </div>
+
+            <div class="detail-row">
+
+                <span>📅 Current Plan</span>
+
+                <strong id="planName"></strong>
+
+            </div>
 
         </div>
 
     </div>
+    <div class="subscription-progress">
+
+    <h2>📈 Membership Progress</h2>
+
+    <div class="progress-bar">
+
+        <div
+        id="progressFill"
+        class="progress-fill">
+
+        </div>
+
+    </div>
+
+    <p id="progressText">
+
+        0% Used
+
+    </p>
+
+</div>
+    <div id="reminder" class="reminder-card" style="display:none"> </div>
+
+</div>
 
 </div>
 
