@@ -220,3 +220,10 @@ function goToDashboard(){
     "/dashboard-page";
 
 }
+
+function goToPayment(){
+
+    window.location.href =
+    "/payment-page";
+
+}

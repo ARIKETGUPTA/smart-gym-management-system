@@ -1,6 +1,14 @@
 const token =
 localStorage.getItem("token");
 
+if(!token){
+
+    window.location.href = "/";
+
+}
+
+// Create Payment
+
 async function makePayment(){
 
     const amount =
@@ -13,99 +21,244 @@ async function makePayment(){
         "paymentMethod"
     ).value;
 
-    const response =
-    await fetch(
+    if(!amount){
 
-        "http://localhost:5000/payment/create",
+        alert(
+            "Please enter amount"
+        );
 
-        {
+        return;
 
-            method:"POST",
+    }
 
-            headers:{
+    try{
 
-                "Content-Type":
-                "application/json",
+        const response =
+        await fetch(
 
-                Authorization:
-                `Bearer ${token}`
+            "http://localhost:5000/payment/create",
 
-            },
+            {
 
-            body:JSON.stringify({
+                method:"POST",
 
-                amount,
-                paymentMethod
+                headers:{
 
-            })
+                    "Content-Type":
+                    "application/json",
 
-        }
+                    Authorization:
+                    `Bearer ${token}`
 
-    );
+                },
 
-    const data =
-    await response.json();
+                body:JSON.stringify({
 
-    alert(data.message);
+                    amount,
+                    paymentMethod
 
-    loadPayments();
-
-}
-
-async function loadPayments(){
-
-    const response =
-    await fetch(
-
-        "http://localhost:5000/payment/history",
-
-        {
-
-            headers:{
-
-                Authorization:
-                `Bearer ${token}`
+                })
 
             }
 
+        );
+
+        const data =
+        await response.json();
+
+        alert(
+            data.message
+        );
+
+        document.getElementById(
+            "amount"
+        ).value = "";
+
+        loadPayments();
+
+    }
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+// Load Payment History
+
+async function loadPayments(){
+
+    try{
+
+        const response =
+        await fetch(
+
+            "http://localhost:5000/payment/history",
+
+            {
+
+                headers:{
+
+                    Authorization:
+                    `Bearer ${token}`
+
+                }
+
+            }
+
+        );
+
+        const payments =
+        await response.json();
+
+        const table =
+        document.getElementById(
+            "paymentTable"
+        );
+
+        table.innerHTML = "";
+
+        let totalPaid = 0;
+
+        if(payments.length === 0){
+
+            table.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+
+                    No payments found
+
+                </td>
+
+            </tr>
+
+            `;
+
+            return;
+
         }
 
+        payments.forEach(payment=>{
+
+            totalPaid +=
+            Number(
+                payment.amount
+            );
+
+            const row =
+            document.createElement(
+                "tr"
+            );
+
+            row.innerHTML = `
+
+                <td>
+
+                    ₹${payment.amount}
+
+                </td>
+
+                <td>
+
+                    ${payment.paymentMethod}
+
+                </td>
+
+                <td>
+
+                    <span class="paid">
+
+                        ${payment.status}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    ${new Date(
+                        payment.paymentDate
+                    ).toLocaleDateString(
+                        "en-IN",
+                        {
+                            day:"2-digit",
+                            month:"short",
+                            year:"numeric"
+                        }
+                    )}
+
+                </td>
+
+            `;
+
+            table.appendChild(
+                row
+            );
+
+        });
+
+        document.getElementById(
+            "totalPaid"
+        ).innerText =
+        totalPaid;
+
+    }
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+// Navigation
+
+function logout(){
+
+    localStorage.removeItem(
+        "token"
     );
 
-    const payments =
-    await response.json();
+    window.location.href =
+    "/";
 
-    const table =
-    document.getElementById(
-        "paymentTable"
-    );
+}
 
-    table.innerHTML = "";
+function goToDashboard(){
 
-    payments.forEach(payment=>{
+    window.location.href =
+    "/dashboard-page";
 
-        const row =
-        document.createElement("tr");
+}
 
-        row.innerHTML = `
+function goToAttendance(){
 
-        <td>${payment.amount}</td>
+    window.location.href =
+    "/attendance-page";
 
-        <td>${payment.paymentMethod}</td>
+}
 
-        <td>${payment.status}</td>
+function goToSubscription(){
 
-        <td>
-        ${new Date(
-            payment.paymentDate
-        ).toLocaleDateString()}
-        </td>
+    window.location.href =
+    "/subscription-page";
 
-        `;
+}
 
-        table.appendChild(row);
+function goToPayment(){
 
-    });
+    window.location.href =
+    "/payment-page";
+
+}
+
+function goToProfile(){
+
+    window.location.href =
+    "/profile-page";
 
 }
 

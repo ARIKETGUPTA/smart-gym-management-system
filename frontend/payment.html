@@ -5,71 +5,138 @@
 
     <title>Payments</title>
 
-    <link rel="stylesheet"
-    href="css/payment.css">
+    <link rel="stylesheet" href="css/payment.css">
 
 </head>
 
 <body>
 
-    <h1>Payment Management</h1>
+<div class="container">
 
-    <input
-    type="number"
-    id="amount"
-    placeholder="Enter Amount">
+    <div class="sidebar">
 
-    <br><br>
+        <h2>🏋 Smart Gym</h2>
 
-    <select id="paymentMethod">
+        <ul>
 
-        <option value="UPI">
-            UPI
-        </option>
+            <li onclick="goToDashboard()">Dashboard</li>
 
-        <option value="Cash">
-            Cash
-        </option>
+            <li onclick="goToAttendance()">Attendance</li>
 
-        <option value="Card">
-            Card
-        </option>
+            <li onclick="goToSubscription()">Subscription</li>
 
-    </select>
+            <li onclick="goToPayment()">Payments</li>
 
-    <br><br>
+            <li onclick="goToProfile()">Profile</li>
 
-    <button onclick="makePayment()">
-        Record Payment
-    </button>
+            <li onclick="logout()">Logout</li>
 
-    <hr>
+        </ul>
 
-    <h2>Payment History</h2>
+    </div>
 
-    <table border="1">
+    <div class="main">
 
-        <thead>
+        <div class="payment-hero">
 
-            <tr>
+            <h1>💳 Payment Center</h1>
 
-                <th>Amount</th>
+            <p>
+                Manage membership payments and payment history
+            </p>
 
-                <th>Method</th>
+        </div>
 
-                <th>Status</th>
+        <div class="payment-grid">
 
-                <th>Date</th>
+            <div class="payment-form-card">
 
-            </tr>
+                <h2>Create Payment</h2>
 
-        </thead>
+                <input
+                type="number"
+                id="amount"
+                placeholder="Enter Amount">
 
-        <tbody id="paymentTable">
+                <select id="paymentMethod">
 
-        </tbody>
+                    <option value="UPI">
+                        UPI
+                    </option>
 
-    </table>
+                    <option value="Cash">
+                        Cash
+                    </option>
+
+                    <option value="Card">
+                        Card
+                    </option>
+
+                </select>
+
+                <button onclick="makePayment()">
+
+                    Record Payment
+
+                </button>
+
+            </div>
+
+            <div class="payment-summary-card">
+
+                <h2>Total Paid</h2>
+
+                <div class="payment-total">
+
+                    ₹<span id="totalPaid">
+
+                        0
+
+                    </span>
+
+                </div>
+
+                <p>
+                    Lifetime Membership Payments
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="payment-history-card">
+
+            <h2>Payment History</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Amount</th>
+
+                        <th>Method</th>
+
+                        <th>Status</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="paymentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 <script src="js/payment.js"></script>
 

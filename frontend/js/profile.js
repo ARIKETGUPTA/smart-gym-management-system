@@ -1,6 +1,14 @@
 const token =
 localStorage.getItem("token");
 
+if(!token){
+
+    window.location.href = "/";
+
+}
+
+// Load Profile
+
 fetch(
     "/auth/profile",
     {
@@ -13,66 +21,161 @@ fetch(
 .then(res=>res.json())
 .then(data=>{
 
+    // Form Fields
+    document.getElementById("avatarLetter").innerText = data.name.charAt(0).toUpperCase();
+
     document.getElementById("name")
-    .value = data.name;
+    .value =
+    data.name;
 
     document.getElementById("email")
-    .value = data.email;
+    .value =
+    data.email;
+
+    // Profile Card
+
+    document.getElementById(
+        "profileName"
+    ).innerText =
+    data.name;
+
+    document.getElementById(
+        "profileEmail"
+    ).innerText =
+    data.email;
+
+})
+.catch(error=>{
+
+    console.log(error);
 
 });
 
+// Attendance Stats
+
+fetch(
+    "/attendance/stats",
+    {
+        headers:{
+            Authorization:
+            `Bearer ${token}`
+        }
+    }
+)
+.then(res=>res.json())
+.then(data=>{
+
+    document.getElementById(
+        "attendanceCount"
+    ).innerText =
+
+    data.totalAttendance;
+
+})
+.catch(error=>{
+
+    console.log(error);
+
+});
+
+// Subscription Info
+
+fetch(
+    "/subscription/me",
+    {
+        headers:{
+            Authorization:
+            `Bearer ${token}`
+        }
+    }
+)
+.then(res=>res.json())
+.then(data=>{
+
+    document.getElementById(
+        "subscriptionPlan"
+    ).innerText =
+
+    data.subscription.plan;
+
+})
+.catch(error=>{
+
+    console.log(error);
+
+});
+
+// Update Profile
+
 async function updateProfile(){
 
-    const token =
-    localStorage.getItem("token");
-
     const name =
-    document.getElementById("name")
-    .value;
+    document.getElementById(
+        "name"
+    ).value;
 
-    const response =
-    await fetch(
+    try{
 
-        "/auth/profile",
+        const response =
+        await fetch(
 
-        {
+            "/auth/profile",
 
-            method:"PUT",
+            {
 
-            headers:{
+                method:"PUT",
 
-                "Content-Type":
-                "application/json",
+                headers:{
 
-                Authorization:
-                `Bearer ${token}`
+                    "Content-Type":
+                    "application/json",
 
-            },
+                    Authorization:
+                    `Bearer ${token}`
 
-            body:JSON.stringify({
+                },
 
-                name
+                body:JSON.stringify({
 
-            })
+                    name
 
-        }
+                })
 
-    );
+            }
 
-    const data =
-    await response.json();
+        );
 
-    alert(
-        "Profile Updated"
-    );
+        const data =
+        await response.json();
+
+        alert(
+            "✅ Profile Updated"
+        );
+
+        document.getElementById(
+            "profileName"
+        ).innerText =
+        name;
+
+    }
+    catch(error){
+
+        console.log(error);
+
+    }
 
 }
 
+// Navigation
+
 function logout(){
 
-    localStorage.removeItem("token");
+    localStorage.removeItem(
+        "token"
+    );
 
-    window.location.href="/";
+    window.location.href =
+    "/";
 
 }
 
@@ -85,16 +188,28 @@ function goToAttendance(){
 
 function goToSubscription(){
 
-   window.location.href ="/subscription-page";
+    window.location.href =
+    "/subscription-page";
 
 }
 
 function goToProfile(){
 
-   window.location.href ="/profile-page";
+    window.location.href =
+    "/profile-page";
 
 }
 
 function goToDashboard(){
-    window.location.href ="/dashboard-page";
+
+    window.location.href =
+    "/dashboard-page";
+
+}
+
+function goToPayment(){
+
+    window.location.href =
+    "/payment-page";
+
 }

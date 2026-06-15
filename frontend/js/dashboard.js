@@ -71,6 +71,13 @@ function goToDashboard() {
     window.location.href = "/dashboard-page";
 }
 
+function goToPayment(){
+
+    window.location.href =
+    "/payment-page";
+
+}
+
 // Mark Attendance
 async function markAttendance() {
 

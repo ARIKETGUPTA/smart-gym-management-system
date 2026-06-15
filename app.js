@@ -58,6 +58,14 @@ app.get( "/attendance-page", (req,res)=>{
     }
 );
 
+app.get("/payment-page", (req, res) => {
+
+    res.sendFile(
+        path.join(__dirname,"frontend","payment.html")
+    );
+
+});
+
 app.get(
     "/subscription-page",
     (req,res)=>{
