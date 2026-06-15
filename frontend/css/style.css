@@ -178,3 +178,21 @@ th{
     transform:translateY(-3px);
 
 }
+
+@media(max-width:768px){
+
+    .sidebar{
+
+        width:100%;
+
+        height:auto;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+}

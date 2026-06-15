@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
 </head>
 <body>
 
@@ -30,7 +30,13 @@
     </div>
 
     <div class="main">
+        <div class="hero">
 
+            <h1>🏋 Smart Gym Management System</h1>
+
+            <p>Track Attendance, Payments and Memberships Easily</p>
+
+        </div>
         <div class="profile-card">
 
            <h2>Welcome Back, <span id="name"></span> 👋</h2>
@@ -63,28 +69,116 @@
         <div class="cards">
 
             <div class="card">
-                <h3>Membership</h3>
+                <h3>💳 Membership</h3>
                 <p id="membership"></p>
             </div>
 
             <div class="card">
-                <h3>Days Remaining</h3>
+                <h3>⏳ Days Remaining</h3>
                 <p id="days"></p>
             </div>
 
             <div class="card">
-                <h3>Payment Status</h3>
+                <h3>💰 Payment Status</h3>
                 <p id="payment"></p>
             </div>
 
             <div class="card">
-                <h3>Attendance Count</h3>
+                <h3>✅ Attendance Count</h3>
                 <p id="attendance"></p>
             </div>
 
         </div>
+        <div class="analytics-section">
+        <div class="attendance-week-card">
+
+    <div class="card-header">
+
+        <h2>📅 Attendance This Week</h2>
+
+        <button onclick="goToAttendance()">View All</button>
 
     </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Day</th>
+                <th>Check In</th>
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="weeklyAttendanceTable">
+
+        </tbody>
+
+    </table>
+
+    </div>
+    <div class="attendance-summary">
+
+    <h2>📊 Monthly Stats</h2>
+
+    <div class="attendance-circle">
+
+        <span id="attendanceRate">
+            0%
+        </span>
+
+    </div>
+
+    <div class="stat-row">
+
+        <span>✅ Present Days</span>
+
+        <strong id="presentDays">
+            0
+        </strong>
+
+    </div>
+
+    <div class="stat-row">
+
+        <span>🛌 Rest Days</span>
+
+        <strong id="restDays">
+            0
+        </strong>
+
+    </div>
+
+    <div class="stat-row">
+
+        <span>❌ Missed Days</span>
+
+        <strong id="missedDays">
+            0
+        </strong>
+
+    </div>
+
+    <div class="streak">
+
+        🔥 Streak:
+        <span id="streakDays">
+            0
+        </span>
+        days
+
+    </div>
+
+    </div>
+    </div>
+
+    </div>
+
+    
 
 </div>
 

@@ -205,3 +205,103 @@ try {
 
 
 };
+
+exports.getWeeklyAttendance =
+async(req,res)=>{
+
+    try{
+
+        const attendance =
+        await Attendance.find({
+
+            user:req.user.id
+
+        })
+
+        .sort({
+
+            checkIn:-1
+
+        })
+
+        .limit(7);
+
+        res.json(attendance);
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+exports.getDashboardStats = async(req,res)=>{
+
+    try{
+
+        const userId = req.user.id;
+
+        const attendance =
+        await Attendance.find({
+
+            user:userId
+
+        });
+
+        const presentDays =
+        attendance.length;
+
+        const attendanceRate =
+        Math.min(
+            Math.round(
+                (presentDays / 30) * 100
+            ),
+            100
+        );
+
+        const restDays = 4;
+
+        const missedDays =
+        Math.max(
+            30 - presentDays - restDays,
+            0
+        );
+
+        const streak =
+        Math.min(
+            presentDays,
+            7
+        );
+
+        res.json({
+
+            attendanceRate,
+
+            presentDays,
+
+            restDays,
+
+            missedDays,
+
+            streak
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};

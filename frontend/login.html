@@ -4,20 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Smart Gym Login</h1>
+    
 
-<input type="email" id="email" placeholder="Enter Email">
+<div class="login-container">
 
-<br><br>
+    <div class="logo">
+        🏋️
+    </div>
 
-<input type="password"  id="password" placeholder="Enter Password">
+    <h1>Smart Gym</h1>
 
-<br><br>
+    <p class="subtitle">
+        Smart Attendance System
+    </p>
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Enter Email">
+    <br>
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter Password">
 
-<button onclick="login()">Login</button>
+    <button onclick="login()">
+        Login
+    </button>
+
+</div>
+
 
 <script src="js/login.js"></script>
 </body>
