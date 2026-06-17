@@ -613,3 +613,117 @@ catch(error){
 
 
 };
+
+exports.getExpiryAlerts = async(req,res)=>{
+
+    try{
+
+        const subscriptions =
+        await Subscription.find({
+
+            status:"Active"
+
+        }).populate(
+
+            "user",
+
+            "name email"
+
+        );
+
+        const alerts = subscriptions
+        .map(sub=>{
+
+            const today =
+            new Date();
+
+            const endDate =
+            new Date(sub.endDate);
+
+            const daysLeft =
+            Math.ceil(
+
+                (endDate - today) /
+
+                (1000 * 60 * 60 * 24)
+
+            );
+
+            return {
+
+                name:
+                sub.user?.name,
+
+                email:
+                sub.user?.email,
+
+                plan:
+                sub.plan,
+
+                daysLeft
+
+            };
+
+        })
+        .filter(item => item.daysLeft <= 7)
+        .sort((a,b)=>
+            a.daysLeft - b.daysLeft
+        );
+
+        res.json(alerts);
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+exports.exportMembers = async(req,res)=>{
+
+    try{
+
+        const members =
+        await User.find();
+
+        let csv =
+
+        "Name,Email,MembershipType,PaymentStatus\n";
+
+        members.forEach(member=>{
+
+            csv +=
+
+            `${member.name},${member.email},${member.membershipType || ""},${member.paymentStatus || ""}\n`;
+
+        });
+
+        res.header(
+            "Content-Type",
+            "text/csv"
+        );
+
+        res.attachment(
+            "members.csv"
+        );
+
+        return res.send(csv);
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};

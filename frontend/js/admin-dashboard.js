@@ -229,3 +229,120 @@ async function loadTopMembers(){
 }
 
 loadTopMembers();
+
+async function loadExpiryAlerts(){
+
+    const response =
+    await fetch(
+
+        "/admin/expiry-alerts",
+
+        {
+
+            headers:{
+
+                Authorization:
+                `Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const alerts =
+    await response.json();
+
+    const table =
+    document.getElementById(
+        "expiryTable"
+    );
+
+    table.innerHTML = "";
+
+    alerts.forEach(item=>{
+
+        const row =
+        document.createElement("tr");
+
+        let badge =
+        item.daysLeft <= 0
+
+        ? "🔴 Expired"
+
+        : `⚠ ${item.daysLeft} Days`;
+
+        row.innerHTML = `
+
+            <td>
+
+                ${item.name}
+
+            </td>
+
+            <td>
+
+                ${item.plan}
+
+            </td>
+
+            <td>
+
+                ${badge}
+
+            </td>
+
+        `;
+
+        table.appendChild(row);
+
+    });
+
+}
+
+loadExpiryAlerts();
+
+async function exportMembers(){
+
+    const token =
+    localStorage.getItem("token");
+
+    const response =
+    await fetch(
+
+        "/admin/export-members",
+
+        {
+
+            headers:{
+
+                Authorization:
+                `Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const blob =
+    await response.blob();
+
+    const url =
+    window.URL.createObjectURL(blob);
+
+    const a =
+    document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+    "members.csv";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+}
