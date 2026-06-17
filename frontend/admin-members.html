@@ -1,33 +1,77 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="css/style.css">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Admin Members</title>
+
+<link rel="stylesheet" href="css/admin-member.css">
+
 
 </head>
+
 <body>
-    
+
 <div class="container">
 
-    <div class="sidebar">
 
-        <h2>🏋 Smart Gym</h2>
+<div class="sidebar">
 
-        <ul>
-            <li>Dashboard</li>
-            <li>Members</li>
-        </ul>
+    <h2>🏋 Smart Gym Admin</h2>
+
+    <ul>
+
+        <li onclick="goToDashboard()">
+            📊 Dashboard
+        </li>
+
+        <li onclick="goToMembers()">
+            👥 Members
+        </li>
+
+        <li onclick="logout()">
+            🚪 Logout
+        </li>
+
+    </ul>
+
+</div>
+
+<div class="main">
+
+    <div class="header">
+
+        <h1>👥 Gym Members</h1>
+
+        <p>
+            Manage all gym members from one place
+        </p>
 
     </div>
 
-    <div class="main">
+    <div class="search-box">
 
-        <h1>Gym Members</h1>
-        <input type="text" id="search" placeholder="Search Member">
-        <button onclick="searchMembers()">Search</button>
-        <br><br>
+        <input
+        type="text"
+        id="search"
+        placeholder="Search Member">
+
+        <button
+        onclick="searchMembers()">
+
+            Search
+
+        </button>
+
+    </div>
+
+    <div class="table-card">
+
         <table>
 
             <thead>
@@ -35,11 +79,17 @@
                 <tr>
 
                     <th>Name</th>
+
                     <th>Email</th>
+
                     <th>Role</th>
-                    <th>MembershipType</th>
-                    <th>PaymentStatus</th>
-                    <th>Control</th>
+
+                    <th>Membership</th>
+
+                    <th>Payment</th>
+
+                    <th>Actions</th>
+
                 </tr>
 
             </thead>
@@ -53,9 +103,106 @@
     </div>
 
 </div>
+```
 
+</div>
+
+<!-- Member Details Modal -->
+
+<div id="memberModal" class="modal">
+
+```
+<div class="modal-content">
+
+    <span
+    class="close"
+    onclick="closeModal()">
+
+        &times;
+
+    </span>
+
+    <h2>Member Details</h2>
+
+    <p>
+        <strong>Name:</strong>
+        <span id="modalName"></span>
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        <span id="modalEmail"></span>
+    </p>
+
+    <p>
+        <strong>Role:</strong>
+        <span id="modalRole"></span>
+    </p>
+
+    <p>
+    <strong>Attendance Count:</strong>
+        <span id="modalAttendance">0</span>
+    </p>
+
+    <p>
+        <strong>Subscription Status:</strong>
+        <span id="modalSubscriptionStatus">Active</span>
+    </p>
+
+    <p>
+        <strong>Plan</strong>
+    </p>
+
+    <select id="modalPlan">
+
+        <option value="Monthly">
+            Monthly
+        </option>
+
+        <option value="Quarterly">
+            Quarterly
+        </option>
+
+        <option value="Yearly">
+            Yearly
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <p>
+        <strong>Payment Status</strong>
+    </p>
+
+    <select id="modalPayment">
+
+        <option value="Paid">
+            Paid
+        </option>
+
+        <option value="Pending">
+            Pending
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button
+    onclick="updateMemberDetails()">
+
+        Save Changes
+
+    </button>
+
+</div>
+```
+
+</div>
 
 <script src="js/admin-members.js"></script>
 
 </body>
+
 </html>

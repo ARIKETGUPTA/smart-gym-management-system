@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getAllMembers  , updatePaymentStatus , deleteMember , updateMember , getAdminStats , getRevenueStats ,  getTopMembers , getAttendanceStats} = require("../controllers/adminController");
+const {getAllMembers  , updatePaymentStatus , deleteMember , updateMember , getAdminStats , getRevenueStats ,  getTopMembers , getAttendanceStats , getMemberDetails} = require("../controllers/adminController");
 const { auth  } = require("../middleware/authMiddleware");
 const { admin } = require("../middleware/adminMiddleware");
 
@@ -13,5 +13,6 @@ router.get("/stats", auth,  admin, getAdminStats );
 router.patch("/payment-status/:id", auth, admin, updatePaymentStatus );
 router.delete("/member/:id", auth, admin, deleteMember );
 router.put( "/member/:id", auth, admin,updateMember );
+router.get("/member/:id" , auth , admin, getMemberDetails);
 
 module.exports = router;

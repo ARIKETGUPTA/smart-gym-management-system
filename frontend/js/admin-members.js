@@ -54,21 +54,28 @@ function renderMembers(data) {
 
             <td>
 
-                <button
-                onclick="editMember('${user._id}')">
+            <button
+            onclick="viewMember('${user._id}')">
 
-                Edit
+            View
 
-                </button>
+        </button>
 
-                <button
-                onclick="deleteMember('${user._id}')">
+        <button
+        onclick="editMember('${user._id}')">
 
-                Delete
+        Edit
 
-                </button>
+        </button>
 
-            </td>
+        <button
+        onclick="deleteMember('${user._id}')">
+
+        Delete
+
+        </button>
+
+    </td>
 
         `;
 
@@ -191,5 +198,170 @@ async function editMember(id) {
     alert(data.message);
 
     location.reload();
+
+}
+
+let selectedMemberId = null;
+
+async function viewMember(id){
+
+    const response =
+    await fetch(
+
+        `/admin/member/${id}`,
+
+        {
+
+            headers:{
+
+                Authorization:
+                `Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const data =
+    await response.json();
+
+    selectedMemberId = id;
+
+    document.getElementById(
+        "modalName"
+    ).innerText =
+    data.user.name;
+
+    document.getElementById(
+        "modalEmail"
+    ).innerText =
+    data.user.email;
+
+    document.getElementById(
+        "modalRole"
+    ).innerText =
+    data.user.role;
+
+    document.getElementById(
+        "modalAttendance"
+    ).innerText =
+    data.attendanceCount;
+
+    document.getElementById(
+        "modalSubscriptionStatus"
+    ).innerText =
+    data.subscription?.status ||
+    "No Subscription";
+
+    document.getElementById(
+        "modalPlan"
+    ).value =
+    data.subscription?.plan ||
+    "Monthly";
+
+    document.getElementById(
+        "modalPayment"
+    ).value =
+    data.subscription?.paymentStatus ||
+    "Pending";
+
+    document.getElementById(
+        "memberModal"
+    ).style.display =
+    "block";
+
+}
+
+async function updateMemberDetails(){
+    
+
+    const membershipType =
+    document.getElementById(
+        "modalPlan"
+    ).value;
+
+    const paymentStatus =
+    document.getElementById(
+        "modalPayment"
+    ).value;
+
+    const response =
+    await fetch(
+
+        `/admin/member/${selectedMemberId}`,
+
+        {
+
+            method:"PUT",
+
+            headers:{
+
+                "Content-Type":
+                "application/json",
+
+                Authorization:
+                `Bearer ${token}`
+
+            },
+
+            body:JSON.stringify({
+
+                membershipType,
+
+                paymentStatus
+
+            })
+
+        }
+
+    );
+
+    const data = await response.json();
+    console.log(
+    "Sending:",
+    membershipType,
+    paymentStatus
+);
+    console.log(data);
+    alert(data.message);
+
+    closeModal();
+
+    location.reload();
+
+}
+
+function closeModal(){
+
+    document.getElementById(
+        "memberModal"
+    ).style.display =
+    "none";
+
+}
+
+function goToDashboard(){
+
+    window.location.href =
+    "/admin-dashboard-page";
+
+}
+
+function goToMembers(){
+
+    window.location.href =
+    "/admin-members-page";
+
+}
+
+function logout(){
+
+    localStorage.removeItem(
+        "token"
+    );
+
+    window.location.href =
+    "/";
 
 }

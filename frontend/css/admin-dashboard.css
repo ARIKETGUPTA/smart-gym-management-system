@@ -1,64 +1,112 @@
 body{
 
-    font-family:Arial;
-    padding:20px;
+    background:#f4f7fb;
+
+    padding:30px;
+
+    font-family:'Segoe UI',sans-serif;
+
+}
+
+.dashboard-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.admin-badge{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:10px 20px;
+
+    border-radius:20px;
+
+    font-weight:bold;
+
+}
+
+.quick-actions{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.quick-actions button{
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:#2563eb;
+
+    color:white;
 
 }
 
 .cards{
 
-    display:flex;
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
     gap:20px;
-    flex-wrap:wrap;
 
 }
 
 .card{
 
-    width:220px;
+    background:white;
 
-    padding:20px;
+    padding:25px;
 
-    border-radius:10px;
-
-    box-shadow:
-    0 0 10px rgba(
-        0,0,0,0.2
-    );
+    border-radius:20px;
 
     text-align:center;
 
-}
-
-.cards{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:20px;
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
 
 }
 
-.card{
+.card h2{
 
-    flex:1 1 250px;
+    color:#2563eb;
+
+    font-size:32px;
 
 }
 
-@media(max-width:768px){
+.chart-card,
+.members-card{
 
-    .cards{
+    background:white;
 
-        flex-direction:column;
+    padding:25px;
 
-    }
+    border-radius:20px;
 
-    .card{
+    margin-top:25px;
 
-        width:100%;
-
-    }
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
 
 }
 
@@ -66,14 +114,44 @@ table{
 
     width:100%;
 
-    overflow-x:auto;
+    border-collapse:collapse;
 
-    display:block;
+    margin-top:15px;
 
 }
 
-canvas{
+th,
+td{
 
-    max-width:100%;
+    padding:15px;
+
+    border-bottom:
+    1px solid #eee;
+
+    text-align:left;
+
+}
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.badge{
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-weight:600;
 
 }

@@ -8,103 +8,202 @@
 
 </head>
 
-<body >
+<body>
 
-<h1>Admin Dashboard</h1>
+<div class="container">
 
-<div class="cards">
+    <div class="sidebar">
 
-    <!-- Existing Cards -->
+        <h2>🏋 Smart Gym Admin</h2>
 
-    <div class="card">
-        <h2 id="members">0</h2>
-        <p>Total Members</p>
+        <ul>
+
+            <li onclick="goToDashboard()">
+                📊 Dashboard
+            </li>
+
+            <li onclick="goToMembers()">
+                👥 Members
+            </li>
+
+            <li onclick="logout()">
+                🚪 Logout
+            </li>
+
+        </ul>
+
     </div>
 
-    <div class="card">
-        <h2 id="subscriptions">0</h2>
-        <p>Active Subscriptions</p>
-    </div>
+    <div class="main">
 
-    <!-- <div class="card">
-        <h2 id="revenue">₹0</h2>
-        <p>Total Revenue</p>
-    </div> -->
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
 
-    <!-- <div class="card">
-        <h2 id="attendance">0</h2>
-        <p>Today's Attendance</p>
-    </div> -->
+            <div>
 
-    <!-- Revenue Analytics -->
+                <h1>🏋 Smart Gym Admin</h1>
 
-    <div class="card">
-        <h2 id="totalRevenue">₹0</h2>
-        <p>Total Revenue</p>
-    </div>
+                <p>
+                    Monitor members, revenue and attendance
+                </p>
 
-    <div class="card">
-        <h2 id="monthlyRevenue">₹0</h2>
-        <p>Monthly Revenue</p>
-    </div>
+            </div>
 
-    <div class="card">
-        <h2 id="todayRevenue">₹0</h2>
-        <p>Today's Revenue</p>
-    </div>
+            <div class="admin-badge">
 
-    <div class="card">
-        <h2 id="totalPayments">0</h2>
-        <p>Total Payments</p>
-    </div>
+                Admin Panel
 
-    <!-- Attendance Analytics -->
+            </div>
 
-    <div class="card">
-        <h2 id="todayAttendanceCard">0</h2>
-        <p>Today's Attendance</p>
-    </div>
+        </div>
 
-    <div class="card">
-        <h2 id="weeklyAttendanceCard">0</h2>
-        <p>Weekly Attendance</p>
-    </div>
+        <!-- Quick Actions -->
+        <div class="quick-actions">
 
-    <div class="card">
-        <h2 id="monthlyAttendanceCard">0</h2>
-        <p>Monthly Attendance</p>
+            <button onclick="location.href='/admin-members-page'">
+                👥 Manage Members
+            </button>
+
+            <button onclick="location.href='/payment-page'">
+                💳 Payments
+            </button>
+
+            <button onclick="exportMembers()">
+                📥 Export Members
+            </button>
+
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+
+            <div class="card">
+                <h2 id="members">0</h2>
+                <p>Total Members</p>
+            </div>
+
+            <div class="card">
+                <h2 id="subscriptions">0</h2>
+                <p>Active Subscriptions</p>
+            </div>
+
+            <div class="card">
+                <h2 id="totalRevenue">₹0</h2>
+                <p>Total Revenue</p>
+            </div>
+
+            <div class="card">
+                <h2 id="monthlyRevenue">₹0</h2>
+                <p>Monthly Revenue</p>
+            </div>
+
+            <div class="card">
+                <h2 id="todayRevenue">₹0</h2>
+                <p>Today's Revenue</p>
+            </div>
+
+            <div class="card">
+                <h2 id="totalPayments">0</h2>
+                <p>Total Payments</p>
+            </div>
+
+            <div class="card">
+                <h2 id="todayAttendanceCard">0</h2>
+                <p>Today's Attendance</p>
+            </div>
+
+            <div class="card">
+                <h2 id="weeklyAttendanceCard">0</h2>
+                <p>Weekly Attendance</p>
+            </div>
+
+            <div class="card">
+                <h2 id="monthlyAttendanceCard">0</h2>
+                <p>Monthly Attendance</p>
+            </div>
+
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="chart-card">
+
+            <h2>📈 Revenue Analytics</h2>
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+        <!-- Top Members -->
+        <div class="members-card">
+
+            <div class="section-header">
+
+                <h2>🏆 Top Active Members</h2>
+
+                <span class="badge">
+                    Leaderboard
+                </span>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Attendance Count</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="topMembersTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Expiry Alerts -->
+        <div class="members-card">
+
+            <div class="section-header">
+
+                <h2>⚠ Membership Expiry Alerts</h2>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Plan</th>
+                        <th>Days Left</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="expiryTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
 
 </div>
-<h2>Revenue Analytics</h2>
 
-<canvas id="revenueChart"></canvas>
-
-<h2>🏆 Top Active Members</h2>
-
-<table>
-
-    <thead>
-
-        <tr>
-
-            <th>Name</th>
-
-            <th>Email</th>
-
-            <th>Attendance Count</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody id="topMembersTable">
-
-    </tbody>
-
-</table>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script src="js/admin-dashboard.js"></script>
 
 </body>

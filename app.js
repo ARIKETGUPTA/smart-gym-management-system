@@ -110,6 +110,23 @@ app.get(
 );
 
 app.get(
+    "/admin-dashboard-page",
+    (req,res)=>{
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "frontend",
+                "admin-dashboard.html"
+            )
+
+        );
+
+    }
+);
+
+app.get(
     "/admin-members-page",
     (req,res)=>{
 

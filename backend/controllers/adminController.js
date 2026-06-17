@@ -121,65 +121,111 @@ exports.deleteMember = async(req,res)=>{
 };
 
 exports.updateMember = async(req,res)=>{
+    console.log("BODY:", req.body);
+    console.log("ID:", req.params.id);
 
-    try{
+try{
 
-        const { id } = req.params;
+    const { id } = req.params;
 
-        const {
-            name,
-            membershipType,
-            paymentStatus,
-            role
-        } = req.body;
+    const {
 
-        const user =
-        await User.findByIdAndUpdate(
+        name,
 
-            id,
+        membershipType,
 
-            {
-                name,
-                membershipType,
-                paymentStatus,
-                role
-            },
+        paymentStatus,
 
-            {
-                new:true,
-                runValidators:true
-            }
+        role
 
-        );
+    } = req.body;
 
-        if(!user){
+    const user =
+await User.findByIdAndUpdate(
 
-            return res.status(404).json({
-                message:"User not found"
-            });
+    id,
+
+    {
+
+        name,
+
+        role,
+
+        membershipType,
+
+        paymentStatus
+
+    },
+
+    {
+
+        new:true
+
+    }
+
+);
+
+    if(!user){
+
+        return res.status(404).json({
+
+            message:"User not found"
+
+        });
+
+    }
+
+    const subscription =
+    await Subscription.findOne({
+
+        user:id
+
+    });
+
+    if(subscription){
+
+        subscription.plan =
+        membershipType;
+
+        subscription.paymentStatus =
+        paymentStatus;
+
+        if(paymentStatus === "Paid"){
+
+            subscription.status =
+            "Active";
 
         }
 
-        res.status(200).json({
-
-            message:"Member updated successfully",
-
-            user
-
-        });
+        await subscription.save();
 
     }
-    catch(error){
 
-        res.status(500).json({
+    res.json({
 
-            error:error.message
+        message:
+        "Member updated successfully",
 
-        });
+        user,
 
-    }
+        subscription
+
+    });
+
+}
+catch(error){
+
+    res.status(500).json({
+
+        error:error.message
+
+    });
+
+}
+
 
 };
+
 
 
 exports.getAdminStats = async(req,res)=>{
@@ -516,5 +562,54 @@ exports.getAttendanceStats = async(req,res)=>{
         });
 
     }
+
+};
+
+exports.getMemberDetails =async(req,res)=>{
+
+try{
+
+    const user =
+    await User.findById(
+
+        req.params.id
+
+    );
+
+    const subscription =
+    await Subscription.findOne({
+
+        user:req.params.id
+
+    });
+
+    const attendanceCount =
+    await Attendance.countDocuments({
+
+        user:req.params.id
+
+    });
+
+    res.json({
+
+        user,
+
+        subscription,
+
+        attendanceCount
+
+    });
+
+}
+catch(error){
+
+    res.status(500).json({
+
+        error:error.message
+
+    });
+
+}
+
 
 };
