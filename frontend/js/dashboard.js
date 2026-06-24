@@ -284,3 +284,10 @@ async function loadAttendanceSummary() {
 // Load Extra Dashboard Sections
 loadWeeklyAttendance();
 loadAttendanceSummary();
+
+function goToQRScanner(){
+
+    window.location.href =
+    "/scan-page";
+
+}

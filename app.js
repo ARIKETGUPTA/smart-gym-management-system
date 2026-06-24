@@ -143,6 +143,19 @@ app.get(
     }
 );
 
+app.get("/scan-page",(req,res)=>{
+
+    res.sendFile(
+
+        path.join(
+            __dirname,"frontend",
+            "scan.html"
+        )
+
+    );
+
+});
+
 
 
 app.use("/payment",paymentRoutes );

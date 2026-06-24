@@ -1,6 +1,6 @@
 const Payment = require("../models/payment");
 const Subscription = require("../models/subscription");
-
+const razorpay = require("../config/razorpay");
 // Create Payment
 exports.createPayment = async(req,res)=>{
 
@@ -101,6 +101,67 @@ async(req,res)=>{
         await Payment.find({ user:req.user.id }).sort({ paymentDate:-1 });
 
         res.json(payments);
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+exports.createOrder = async(req,res)=>{
+
+    try{
+
+        const { plan } =
+        req.body;
+
+        let amount = 0;
+
+        if(plan === "Monthly"){
+
+            amount = 999;
+
+        }
+        else if(
+            plan === "Quarterly"
+        ){
+
+            amount = 2499;
+
+        }
+        else if(
+            plan === "Yearly"
+        ){
+
+            amount = 8999;
+
+        }
+
+        const options = {
+
+            amount:
+            amount * 100,
+
+            currency:"INR",
+
+            receipt:
+            `receipt_${Date.now()}`
+
+        };
+
+        const order =
+        await razorpay.orders.create(
+            options
+        );
+
+        res.json(order);
 
     }
     catch(error){

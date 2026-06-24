@@ -230,3 +230,80 @@ function goToPayment(){
     "/payment-page";
 
 }
+
+async function buyPlan(plan){
+
+    const token =
+    localStorage.getItem(
+        "token"
+    );
+
+    const response =
+    await fetch(
+
+        "/payment/create-order",
+
+        {
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":
+                "application/json",
+
+                Authorization:
+                `Bearer ${token}`
+
+            },
+
+            body:JSON.stringify({
+
+                plan
+
+            })
+
+        }
+
+    );
+
+    const order =
+    await response.json();
+
+    const options = {
+
+        key:
+        "YOUR_RAZORPAY_KEY",
+
+        amount:
+        order.amount,
+
+        currency:
+        order.currency,
+
+        order_id:
+        order.id,
+
+        name:
+        "Smart Gym",
+
+        description:
+        `${plan} Subscription`,
+
+        handler:
+        async function(response){
+
+            alert(
+                "Payment Successful"
+            );
+
+        }
+
+    };
+
+    const razorpay =
+    new Razorpay(options);
+
+    razorpay.open();
+
+}
