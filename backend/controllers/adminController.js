@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Attendance = require("../models/attendance");
 const Subscription = require("../models/subscription");
 const Payment = require("../models/payment");
-
+const QRCode = require("qrcode");
 exports.getAllMembers = async(req,res)=>{
 
     try{
@@ -714,6 +714,145 @@ exports.exportMembers = async(req,res)=>{
         );
 
         return res.send(csv);
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+exports.getNotifications = async(req,res)=>{
+
+    try{
+
+        // Expiring Memberships
+
+        const subscriptions =
+        await Subscription.find({
+
+            status:"Active"
+
+        });
+
+        let expiringCount = 0;
+
+        subscriptions.forEach(sub=>{
+
+            const daysLeft =
+            Math.ceil(
+
+                (new Date(sub.endDate) - new Date())
+
+                /(1000*60*60*24)
+
+            );
+
+            if(daysLeft <= 7){
+
+                expiringCount++;
+
+            }
+
+        });
+
+        // Pending Payments
+
+        const pendingPayments =
+        await Subscription.countDocuments({
+
+            paymentStatus:"Pending"
+
+        });
+
+        // Today's Attendance
+
+        const startOfDay =
+        new Date();
+
+        startOfDay.setHours(
+            0,0,0,0
+        );
+
+        const totalMembers =
+        await User.countDocuments({
+
+            role:"User"
+
+        });
+
+        const presentToday =
+        await Attendance.countDocuments({
+
+            date:{
+                $gte:startOfDay
+            }
+
+        });
+
+        const absentToday =
+        Math.max(
+            totalMembers - presentToday,
+            0
+        );
+
+        res.json({
+
+            expiringCount,
+
+            pendingPayments,
+
+            absentToday
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};
+
+
+exports.generateQRCode = async(req,res)=>{
+
+    try{
+
+        const qrData = {
+
+            gym:"SMART_GYM",
+
+            date:
+            new Date()
+            .toISOString()
+            .split("T")[0]
+
+        };
+
+        const qrImage =
+        await QRCode.toDataURL(
+
+            JSON.stringify(qrData)
+
+        );
+
+        res.json({
+
+            qrImage
+
+        });
 
     }
     catch(error){

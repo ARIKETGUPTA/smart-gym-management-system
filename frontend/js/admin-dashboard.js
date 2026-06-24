@@ -346,3 +346,89 @@ async function exportMembers(){
     a.remove();
 
 }
+
+async function loadNotifications(){
+
+    const response =
+    await fetch(
+
+        "/admin/notifications",
+
+        {
+
+            headers:{
+
+                Authorization:
+                `Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const data =
+    await response.json();
+
+    document.getElementById(
+        "notifications"
+    ).innerHTML = `
+
+        <div class="notification-item">
+
+            ⚠ ${data.expiringCount}
+            memberships expiring soon
+
+        </div>
+
+        <div class="notification-item">
+
+            💳 ${data.pendingPayments}
+            pending payments
+
+        </div>
+
+        <div class="notification-item">
+
+            📅 ${data.absentToday}
+            members absent today
+
+        </div>
+
+    `;
+
+}
+
+loadNotifications();
+
+async function loadQR(){
+
+    const response =
+    await fetch(
+
+        "/admin/generate-qr",
+
+        {
+
+            headers:{
+
+                Authorization:
+                `Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const data =
+    await response.json();
+
+    document.getElementById(
+        "qrImage"
+    ).src =
+    data.qrImage;
+
+}
+
+loadQR();

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getAllMembers  , updatePaymentStatus , deleteMember , updateMember , getAdminStats , getRevenueStats ,  getTopMembers , getAttendanceStats , getMemberDetails , getExpiryAlerts , exportMembers} = require("../controllers/adminController");
+const {getAllMembers  , updatePaymentStatus , deleteMember , updateMember , getAdminStats , getRevenueStats ,  getTopMembers , getAttendanceStats , getMemberDetails , getExpiryAlerts , exportMembers , getNotifications , generateQRCode} = require("../controllers/adminController");
 const { auth  } = require("../middleware/authMiddleware");
 const { admin } = require("../middleware/adminMiddleware");
 
@@ -16,5 +16,7 @@ router.put( "/member/:id", auth, admin,updateMember );
 router.get("/member/:id" , auth , admin, getMemberDetails);
 router.get("/expiry-alerts",auth,admin,getExpiryAlerts );
 router.get("/export-members",auth,admin,exportMembers);
+router.get("/notifications",auth,admin,getNotifications);
+router.get("/generate-qr",auth,admin,generateQRCode);
 
 module.exports = router;

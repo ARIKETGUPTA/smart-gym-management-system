@@ -305,3 +305,62 @@ exports.getDashboardStats = async(req,res)=>{
     }
 
 };
+
+exports.scanAttendance = async(req,res)=>{
+
+    try{
+
+        const data =
+        JSON.parse(
+            req.body.qrData
+        );
+
+        const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+        if(data.date !== today){
+
+            return res.status(400)
+            .json({
+
+                message:
+                "QR Expired"
+
+            });
+
+        }
+
+        const attendance =
+        new Attendance({
+
+            user:req.user.id,
+
+            method:"QR",
+
+            status:"Present"
+
+        });
+
+        await attendance.save();
+
+        res.json({
+
+            message:
+            "Attendance Marked"
+
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
+};

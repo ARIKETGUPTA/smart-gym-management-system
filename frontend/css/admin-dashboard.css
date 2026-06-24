@@ -171,3 +171,34 @@ td{
     font-weight:bold;
 
 }
+
+.notification-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    margin-top:25px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.notification-item{
+
+    background:#f8fafc;
+
+    padding:15px;
+
+    margin-top:12px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
