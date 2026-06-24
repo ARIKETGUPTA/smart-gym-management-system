@@ -272,8 +272,7 @@ async function buyPlan(plan){
 
     const options = {
 
-        key:
-        "YOUR_RAZORPAY_KEY",
+        key: "rzp_test_T5WEIwwzQiHy9s",
 
         amount:
         order.amount,
