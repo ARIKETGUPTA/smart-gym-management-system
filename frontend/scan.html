@@ -5,11 +5,8 @@
 
 <title>Scan QR</title>
 
-<script src=
-"https://unpkg.com/html5-qrcode">
-
-</script>
-
+<script src="https://unpkg.com/html5-qrcode"></script>
+<link href = "css/scan.css" rel ="stylesheet">
 </head>
 
 <body>
@@ -19,7 +16,31 @@
 Scan Gym QR
 
 </h1>
+<div
+id="successMessage"
 
+style="
+
+display:none;
+background:#dcfce7;
+color:#15803d;
+padding:20px;
+border-radius:15px;
+margin:20px auto;
+width:400px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+
+">
+
+    ✅ Attendance Marked Successfully
+
+    <br><br>
+
+    Redirecting to Attendance History...
+
+</div>
 <div id="reader">
 
 </div>

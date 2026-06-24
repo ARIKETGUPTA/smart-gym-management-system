@@ -311,9 +311,7 @@ exports.scanAttendance = async(req,res)=>{
     try{
 
         const data =
-        JSON.parse(
-            req.body.qrData
-        );
+        JSON.parse(req.body.qrData);
 
         const today =
         new Date()
@@ -322,35 +320,80 @@ exports.scanAttendance = async(req,res)=>{
 
         if(data.date !== today){
 
-            return res.status(400)
-            .json({
+            return res.status(400).json({
+
+                message:"QR Expired"
+
+            });
+
+        }
+
+        const startOfDay =
+        new Date();
+
+        startOfDay.setHours(
+            0,0,0,0
+        );
+
+        const endOfDay =
+        new Date();
+
+        endOfDay.setHours(
+            23,59,59,999
+        );
+
+        const alreadyMarked =
+        await Attendance.findOne({
+
+            user:req.user.id,
+
+            date:{
+                $gte:startOfDay,
+                $lte:endOfDay
+            }
+
+        });
+
+        if(alreadyMarked){
+
+            return res.status(400).json({
 
                 message:
-                "QR Expired"
+                "Attendance already marked today"
 
             });
 
         }
 
         const attendance =
-        new Attendance({
+        await Attendance.create({
 
             user:req.user.id,
 
             method:"QR",
 
-            status:"Present"
+            status:"Present",
+
+            date:new Date(),
+
+            checkIn:new Date()
 
         });
 
-        await attendance.save();
+        console.log(
+            "QR Attendance Saved:",
+            attendance
+        );
 
         res.json({
 
             message:
-            "Attendance Marked"
+            "Attendance Marked Successfully",
+
+            attendance,
 
         });
+        
 
     }
     catch(error){

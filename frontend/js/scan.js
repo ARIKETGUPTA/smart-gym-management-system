@@ -36,11 +36,49 @@ function onScanSuccess(decodedText){
 
     .then(res=>res.json())
 
-    .then(data=>{
+   .then(data=>{
+
+    if(
+
+        data.message ===
+
+        "Attendance Marked Successfully"
+
+    ){
+
+        document.getElementById(
+
+            "reader"
+
+        ).style.display =
+
+        "none";
+
+        document.getElementById(
+
+            "successMessage"
+
+        ).style.display =
+
+        "block";
+
+        setTimeout(()=>{
+
+            window.location.href =
+
+            "/attendance-page";
+
+        },2000);
+
+    }
+
+    else{
 
         alert(data.message);
 
-    });
+    }
+
+});
 
 }
 
