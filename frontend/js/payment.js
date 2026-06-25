@@ -155,42 +155,17 @@ async function loadPayments(){
 
             row.innerHTML = `
 
-                <td>
+                <td>₹${payment.amount}</td>
 
-                    ₹${payment.amount}
+                <td>${payment.paymentMethod}</td>
 
-                </td>
+                <td>${payment.paymentGateway}</td>
 
-                <td>
+                <td>${payment.status}</td>
 
-                    ${payment.paymentMethod}
+                <td>${payment.transactionId}</td>
 
-                </td>
-
-                <td>
-
-                    <span class="paid">
-
-                        ${payment.status}
-
-                    </span>
-
-                </td>
-
-                <td>
-
-                    ${new Date(
-                        payment.paymentDate
-                    ).toLocaleDateString(
-                        "en-IN",
-                        {
-                            day:"2-digit",
-                            month:"short",
-                            year:"numeric"
-                        }
-                    )}
-
-                </td>
+                <td>${new Date(payment.paymentDate).toLocaleDateString()}</td>
 
             `;
 

@@ -289,14 +289,53 @@ async function buyPlan(plan){
         description:
         `${plan} Subscription`,
 
-        handler:
-        async function(response){
+        handler: async function(response){
 
-            alert(
-                "Payment Successful"
-            );
+    const verify =
+    await fetch(
+
+        "/payment/verify-payment",
+
+        {
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":
+                "application/json",
+
+                Authorization:
+                `Bearer ${token}`
+
+            },
+
+            body:JSON.stringify({
+
+                plan,
+
+                razorpay_order_id:
+                response.razorpay_order_id,
+
+                razorpay_payment_id:
+                response.razorpay_payment_id,
+
+                razorpay_signature:
+                response.razorpay_signature
+
+            })
 
         }
+
+    );
+
+    const data = await verify.json();
+
+    console.log("Verify Response:", data);
+
+    alert(JSON.stringify(data));
+
+}
 
     };
 

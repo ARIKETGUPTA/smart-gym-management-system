@@ -16,20 +16,40 @@ const paymentSchema = new mongoose.Schema({
     paymentMethod:{
         type:String,
         enum:[
-            "Cash",
             "UPI",
-            "Card"
+            "Card",
+            "NetBanking",
+            "Wallet",
+            "Cash"
         ],
         required:true
+    },
+
+    paymentGateway:{
+        type:String,
+        enum:[
+            "Razorpay",
+            "Cash"
+        ],
+        default:"Razorpay"
+    },
+
+    transactionId:{
+        type:String
+    },
+
+    orderId:{
+        type:String
     },
 
     status:{
         type:String,
         enum:[
+            "Pending",
             "Paid",
-            "Pending"
+            "Failed"
         ],
-        default:"Paid"
+        default:"Pending"
     },
 
     paymentDate:{
@@ -37,12 +57,7 @@ const paymentSchema = new mongoose.Schema({
         default:Date.now
     }
 
-},{
-    timestamps:true
-});
+},{timestamps:true});
 
 module.exports =
-mongoose.model(
-    "Payment",
-    paymentSchema
-);
+mongoose.model("Payment",paymentSchema);
