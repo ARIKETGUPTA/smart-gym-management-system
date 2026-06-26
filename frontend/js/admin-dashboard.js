@@ -432,3 +432,14 @@ async function loadQR(){
 }
 
 loadQR();
+
+function logout() {
+
+    localStorage.removeItem("token");
+
+    window.location.href = "/";
+}
+
+function goToMembers(){
+    window.location.href = "/admin-members-page";
+}

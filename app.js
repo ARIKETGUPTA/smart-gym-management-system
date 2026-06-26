@@ -156,7 +156,27 @@ app.get("/scan-page",(req,res)=>{
 
 });
 
+app.get("/forgot-password", (req, res) => {
 
+    res.sendFile(
+        path.join(__dirname, "frontend", "forgot-password.html")
+    );
+
+});
+
+app.get(
+    "/reset-password/:token",
+    (req,res)=>{
+
+        res.sendFile(
+            path.join(
+                __dirname,
+                "frontend",
+                "reset-password.html"
+            )
+        );
+
+});
 
 app.use("/payment",paymentRoutes );
 app.use("/api/attendance",attendanceRoutes);

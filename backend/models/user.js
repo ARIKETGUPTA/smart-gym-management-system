@@ -48,6 +48,14 @@ const userSchema = new mongoose.Schema({
         default:"Pending"
     },
 
+    resetPasswordToken: {
+    type: String
+    },
+
+    resetPasswordExpire: {
+    type: Date
+    },
+
     attendance:[
         {
             date:{

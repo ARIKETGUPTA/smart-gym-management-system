@@ -25,13 +25,13 @@ async function login(){
     const data = await response.json();
 
     if(data.token){
+        
+        localStorage.setItem(  "token", data.token );
+        localStorage.setItem("role", data.user.role);
 
-        localStorage.setItem(
-            "token",
-            data.token
-        );
-
+    if(data.user.role === "User"){   
         window.location.href = "/dashboard-page";
+    }else {window.location.href = "/admin-dashboard-page";}
 
     }else{
 
