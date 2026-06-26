@@ -38,7 +38,7 @@ async function loadRevenueStats(){
     const response =
     await fetch(
 
-        "http://localhost:5000/admin/revenue-stats",
+        "/admin/revenue-stats",
 
         {
 
@@ -131,7 +131,7 @@ async function loadAttendanceStats(){
     const response =
     await fetch(
 
-        "http://localhost:5000/admin/attendance-stats",
+        "/admin/attendance-stats",
 
         {
 
